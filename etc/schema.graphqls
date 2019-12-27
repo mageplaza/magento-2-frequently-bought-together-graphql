@@ -1,0 +1,29 @@
+
+type Query {
+    products (
+        filter: ProductFilterInput @doc(description: "Identifies which product attributes to search for and return."),
+        pageSize: Int = 20 @doc(description: "Specifies the maximum number of results to return at once. This attribute is optional."),
+        currentPage: Int = 1 @doc(description: "Specifies which page of results to return. The default value is 1.")
+    ): Products
+    @resolver(class: "Magento\\CatalogGraphQl\\Model\\Resolver\\Products") @doc(description: "The products query searches for products that match the criteria specified in the search and filter attributes.") @cache(cacheIdentity: "Magento\\CatalogGraphQl\\Model\\Resolver\\Product\\Identity")
+}
+
+type FbtProducts implements FbtProductInterface @doc(description: "FbtProducts is an implementation of FbtProductInterface.") {
+}
+
+interface FbtProductInterface @typeResolver(class: "Mageplaza\\FrequentlyBoughtGraphQl\\Model\\ProductLinkTypeResolverComposite") @doc(description:"FbtProducts contains information about frequently bought products, including product type of each item.") {
+    sku: String @doc(description: "The identifier of the linked product")
+    linked_product_sku: String @doc(description: "The SKU of the linked product")
+    linked_product_type: String @doc(description: "The type of linked product (simple, virtual, bundle, downloadable, grouped, configurable)")
+    position: Int @doc(description: "The position within the list of product links")
+}
+
+interface ProductInterface @typeResolver(class: "Magento\\CatalogGraphQl\\Model\\ProductInterfaceTypeResolverComposite") @doc(description: "The ProductInterface contains attributes that are common to all types of products. Note that descriptions may not be available for custom and EAV attributes.") {
+    fbt_products: [FbtProductInterface] @doc(description: "An array of ProductLinks objects") @resolver(class: "Mageplaza\\FrequentlyBoughtGraphQl\\Model\\Resolver\\FrequentlyBought\\FbtProducts")
+}
+
+type Products @doc(description: "The Products object is the top-level object returned in a product search") {
+    items: [ProductInterface] @doc(description: "An array of products that match the specified search criteria")
+    page_info: SearchResultPageInfo @doc(description: "An object that includes the page_info and currentPage values specified in the query")
+    total_count: Int @doc(description: "The number of products returned")
+}
