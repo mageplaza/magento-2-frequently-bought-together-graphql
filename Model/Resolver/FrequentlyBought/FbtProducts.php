@@ -83,6 +83,9 @@ class FbtProducts implements ResolverInterface
         array $value = null,
         array $args = null
     ) {
+        if (!$this->helperData->isEnabled()) {
+            throw new LocalizedException(__('The module is disabled'));
+        }
         if (!isset($value['model'])) {
             throw new LocalizedException(__('"model" value should be specified'));
         }
