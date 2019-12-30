@@ -86,8 +86,8 @@ class FrequentlyBoughtProducts implements ResolverInterface
             /** @var FrequentlyBoughtModel $model */
             $model = $this->fbtModelFactory->create();
             $collection = $model->getProductCollection($product);
-            foreach ($fields as $field) {
-                $collection->addAttributeToSelect($field);
+            foreach ($fields as $fieldProduct) {
+                $collection->addAttributeToSelect($fieldProduct);
             }
             $collection->setPositionOrder()->addStoreFilter();
             foreach ($collection->getItems() as $fbtProduct) {
