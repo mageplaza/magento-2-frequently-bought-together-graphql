@@ -47,21 +47,30 @@ class FrequentlyBoughtProducts implements ResolverInterface
      * @var Data
      */
     protected $helperData;
+
     /**
      * @var ProductFieldsSelector
      */
     protected $productFieldsSelector;
+
     /**
      * @var FieldTranslator
      */
     protected $fieldTranslator;
 
+    /**
+     * FrequentlyBoughtProducts constructor.
+     *
+     * @param Data $helperData
+     * @param FrequentlyBoughtFactory $fbtModelFactory
+     * @param FieldTranslator $fieldTranslator
+     */
     public function __construct(
         Data $helperData,
         FrequentlyBoughtFactory $fbtModelFactory,
         FieldTranslator $fieldTranslator
     ) {
-        $this->helperData = $helperData;
+        $this->helperData      = $helperData;
         $this->fbtModelFactory = $fbtModelFactory;
         $this->fieldTranslator = $fieldTranslator;
     }
@@ -80,20 +89,20 @@ class FrequentlyBoughtProducts implements ResolverInterface
 
         /** @var Product $product */
         $product = $value['model'];
-        $fields = $this->getProductFieldsFromInfo($info, 'fbt_products');
-        $data = [];
+        $fields  = $this->getProductFieldsFromInfo($info, 'fbt_products');
+        $data    = [];
         if ($this->helperData->hasProductLinks($product->getId())) {
             /** @var FrequentlyBoughtModel $model */
-            $model = $this->fbtModelFactory->create();
+            $model      = $this->fbtModelFactory->create();
             $collection = $model->getProductCollection($product);
             foreach ($fields as $fieldProduct) {
                 $collection->addAttributeToSelect($fieldProduct);
             }
             $collection->setPositionOrder()->addStoreFilter();
             foreach ($collection->getItems() as $fbtProduct) {
-                $productData = $fbtProduct->getData();
+                $productData          = $fbtProduct->getData();
                 $productData['model'] = $fbtProduct;
-                $data[] = $productData;
+                $data[]               = $productData;
             }
         }
 
@@ -105,9 +114,10 @@ class FrequentlyBoughtProducts implements ResolverInterface
      *
      * @param ResolveInfo $info
      * @param string $productNodeName
+     *
      * @return string[]
      */
-    public function getProductFieldsFromInfo(ResolveInfo $info, string $productNodeName = 'product') : array
+    public function getProductFieldsFromInfo(ResolveInfo $info, string $productNodeName = 'product'): array
     {
         $fieldNames = [];
         foreach ($info->fieldNodes as $node) {
