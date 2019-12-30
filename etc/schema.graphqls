@@ -1,0 +1,3 @@
+interface ProductInterface {
+    fbt_products: [ProductInterface] @doc(description: "Mageplaza Frequently Bought Together Products") @resolver(class: "Mageplaza\\FrequentlyBoughtGraphQl\\Model\\Resolver\\FrequentlyBoughtProducts")
+}
