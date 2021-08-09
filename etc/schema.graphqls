@@ -1,3 +1,18 @@
 interface ProductInterface {
     fbt_products: [ProductInterface] @doc(description: "Mageplaza Frequently Bought Together Products") @resolver(class: "Mageplaza\\FrequentlyBoughtGraphQl\\Model\\Resolver\\FrequentlyBoughtProducts")
 }
+
+type Query {
+    mpFrequentlyBoughtConfig: Config @resolver(class: "Mageplaza\\FrequentlyBoughtGraphQl\\Model\\Resolver\\Config")
+}
+
+type Config @doc(description: "Config defines the Frequently Bought details config") {
+    isEnable: Boolean @doc(description: "Module is enable")
+    product_method: String @doc(description: "Product Method Config")
+    block_name: String @doc(description: "Block Name")
+    item_limit: Boolean @doc(description: "Item Limit")
+    enable_add_to_wishlist: Boolean @doc(description: "Enable Add To Wishlist")
+    remove_related_block: Boolean @doc(description: "Remove Related Block Config")
+    separator_image: String @doc(description: "Separator Image")
+    use_popup: Boolean @doc(description: "Use Popup Config")
+}
