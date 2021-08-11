@@ -69,21 +69,4 @@ class Config implements ResolverInterface
 
         return $this->boughtRepository->config();
     }
-
-    /**
-     * @return array
-     */
-    public function getConfig()
-    {
-        return [
-            "isEnable" => $this->helperData->isEnabled(),
-            "product_method" => $this->helperData->getConfigGeneral('product_method'),
-            "block_name" => $this->helperData->getConfigGeneral('block_name'),
-            "item_limit" => $this->helperData->getConfigGeneral('item_limit'),
-            "enable_add_to_wishlist" => $this->helperData->getConfigGeneral('enable_add_to_wishlist'),
-            "remove_related_block" => $this->helperData->getConfigGeneral('remove_related_block'),
-            "separator_image" => $this->helperData->getConfigGeneral('separator_image'),
-            "use_popup" => $this->helperData->getConfigGeneral('use_popup')
-        ];
-    }
 }
