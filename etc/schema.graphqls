@@ -7,7 +7,7 @@ type Query {
 }
 
 type Config @doc(description: "Config defines the Frequently Bought details config") {
-    isEnable: Boolean @doc(description: "Module is enable")
+    is_enable: Boolean @doc(description: "Module is enable")
     product_method: String @doc(description: "Product Method Config")
     block_name: String @doc(description: "Block Name")
     item_limit: Boolean @doc(description: "Item Limit")

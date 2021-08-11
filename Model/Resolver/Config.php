@@ -27,6 +27,7 @@ use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Mageplaza\FrequentlyBought\Helper\Data;
+use Mageplaza\FrequentlyBought\Api\FrequentlyBoughtRepositoryInterface as FBRepositoryInterface;
 
 /**
  * Class Config
@@ -40,15 +41,21 @@ class Config implements ResolverInterface
     protected $helperData;
 
     /**
-     * Config constructor.
-     *
+     * @var FBRepositoryInterface
+     */
+    protected $boughtRepository;
+
+    /**
      * @param Data $helperData
+     * @param FBRepositoryInterface $boughtRepository
      */
     public function __construct(
-        Data $helperData
+        Data $helperData,
+        FBRepositoryInterface $boughtRepository
     )
     {
         $this->helperData = $helperData;
+        $this->boughtRepository = $boughtRepository;
     }
 
     /**
@@ -60,7 +67,7 @@ class Config implements ResolverInterface
             throw new LocalizedException(__('The module is disabled'));
         }
 
-        return $this->getConfig();
+        return $this->boughtRepository->config();
     }
 
     /**
